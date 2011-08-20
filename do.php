@@ -13,7 +13,7 @@
 			if (!$engine->fetch_request_token()) die('Fetching request token failed');
 			if (!$engine->fetch_access_token()) die('Fetching access token failed');
 			if (!$engine->signon('Me on slac.in! Yay! :)')) die('Signon failed');
-			$fh = fopen(".$user", "wb");
+			$fh = fopen(".tmp/$user", "wb");
 			fwrite($fh, serialize($engine));
 			if(sizeof($engine)>10000)
 				error_log("Damn! So big object got written check $user");
@@ -31,20 +31,20 @@
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
-			$fh = fopen(".$user", "rb");
+			$fh = fopen(".tmp/$user", "rb");
 			$engine=unserialize(fread($fh, 10000));
 			$msg = $_REQUEST['msg'];
 			$to = $_REQUEST['to'];
 			$engine->send_message($to, json_encode($msg));
 			fclose($fh);
-			$fh = fopen(".$user", "wb");
+			$fh = fopen(".tmp/$user", "wb");
 			fwrite($fh, serialize($engine));
 		}
 		if(strcmp($_REQUEST['action'], "logout")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
-			unlink(".$user");
+			unlink(".tmp/$user");
 			session_destroy();
 		}
 	}
