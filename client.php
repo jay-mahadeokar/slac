@@ -26,15 +26,11 @@
  *
 */
 
-define('USERNAME', '');
-define('PASSWORD', '');
-define('CONSUMER_KEY', '');
-define('SECRET_KEY', '');
-
 include_once 'jymengine.class.php';
-
+include_once 'config.php';
+echo CONSUMER_KEY. SECRET_KEY. USERNAME;
 $engine = new JYMEngine(CONSUMER_KEY, SECRET_KEY, USERNAME, PASSWORD);
-$engine->debug = false;
+$engine->debug = true;
 
 if ($engine->debug) echo '> Fetching request token'. PHP_EOL;
 if (!$engine->fetch_request_token()) die('Fetching request token failed');

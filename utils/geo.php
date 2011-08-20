@@ -1,6 +1,7 @@
 <?php
 
 
+
 	echo "Reverse geocode functionality <br/>";
 	//echo reverseGeocodeCity(21.16,79.06);
 	echo getReverseGeocodeJSON(21.16,79.06)->ResultSet->Results[0]->woeid;
@@ -17,6 +18,11 @@
 	//getGoogleNews("Nagpur");
 	
 function getReverseGeocodeJSON($lat,$lon)
+	//echo "Reverse geocode functionality <br/>";
+	//echo reverseGeocodeCity(21.16,79.06);
+	//var_dump( getWeatherInfo("Nagpur"));
+include_once '../config.php';
+function reverseGeocodeCity($lat,$lon)
 {
 	$url = "http://where.yahooapis.com/geocode?location=".$lat."+".$lon."&gflags=R&flags=J&appid=".$appid;
 	
