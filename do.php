@@ -3,10 +3,10 @@
 	include_once 'config.php';
 	session_start();
 	if(isset($_REQUEST['action'])){
-		echo "I m in action.<br />";
+		if($debug) echo "I m in action.<br />";
 		$action = $_REQUEST['action'];
 		if(strcmp($_REQUEST['action'], "login")==0){
-			echo "I m in action login";
+			if($debug) echo "I m in action login";
 			$user = $_REQUEST['user'];
 			$password = $_REQUEST['password'];
 			$engine = new JYMEngine(CONSUMER_KEY, SECRET_KEY, $user, $password);
@@ -19,14 +19,17 @@
 				error_log("Damn! So big object got written check $user");
 			$_SESSION['loggedIn']=1;
 			$_SESSION['user']=$user;
-			echo "Logged in!";
+			if($debug) echo "Logged in!";
 		}
 		if(strcmp($_REQUEST['action'], "getContacts")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
 			$user = $_SESSION['user'];
-			
+			$fh = fopen(".tmp/$user", "rb");
+			$serialized_data= fread($fh, 10000);
+			$engine=unserialize($serialized_data);
+			return $engine->fetch_contact_list();
 		}
 		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
@@ -35,12 +38,12 @@
 			$user = $_SESSION['user'];
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
-			var_dump($serialized_data);
+			if($debug) var_dump($serialized_data);
 			$engine=unserialize($serialized_data);
-			var_dump($engine);
+			if($debug) var_dump($engine);
 			$msg = $_REQUEST['msg'];
 			$to = $_REQUEST['to'];
-			echo "Sending $msg to $to";
+			if($debug) echo "Sending $msg to $to";
 			var_dump($engine->send_message($to, json_encode($msg)));
 			fclose($fh);
 			$fh = fopen(".tmp/$user", "wb");
@@ -51,6 +54,10 @@
 				exit();
 			}
 			$user = $_SESSION['user'];
+			$fh = fopen(".tmp/$user", "rb");
+			$serialized_data= fread($fh, 10000);
+			$engine=unserialize($serialized_data);
+			$engine->signoff();
 			unlink(".tmp/$user");
 			session_destroy();
 		}
