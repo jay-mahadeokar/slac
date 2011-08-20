@@ -25,12 +25,14 @@
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
+			$user = $_SESSION['user'];
 			
 		}
 		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
+			$user = $_SESSION['user'];
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
 			var_dump($serialized_data);
@@ -48,6 +50,7 @@
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
+			$user = $_SESSION['user'];
 			unlink(".tmp/$user");
 			session_destroy();
 		}
