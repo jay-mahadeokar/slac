@@ -33,6 +33,7 @@
 			}
 			$fh = fopen(".tmp/$user", "rb");
 			$engine=unserialize(fread($fh, 10000));
+			var_dump($engine);
 			$msg = $_REQUEST['msg'];
 			$to = $_REQUEST['to'];
 			echo "Sending $msg to $to";
