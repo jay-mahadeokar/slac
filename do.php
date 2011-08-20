@@ -32,7 +32,9 @@
 				exit();
 			}
 			$fh = fopen(".tmp/$user", "rb");
-			$engine=unserialize(fread($fh, 10000));
+			$serialized_data= fread($fh, 10000);
+			var_dump($serialized_data);
+			$engine=unserialize($serialized_data);
 			var_dump($engine);
 			$msg = $_REQUEST['msg'];
 			$to = $_REQUEST['to'];
