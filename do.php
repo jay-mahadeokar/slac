@@ -3,8 +3,10 @@
 	include_once 'config.php';
 	session_start();
 	if(isset($_REQUEST['action'])){
+		echo "I m in action.<br />";
 		$action = $_REQUEST['action'];
-		if(strcmp($_REQUEST['action'], "login")){
+		if(strcmp($_REQUEST['action'], "login")==0){
+			echo "I m in action login";
 			$user = $_REQUEST['user'];
 			$password = $_REQUEST['password'];
 			$engine = new JYMEngine(CONSUMER_KEY, SECRET_KEY, $user, $password);
@@ -17,8 +19,15 @@
 				error_log("Damn! So big object got written check $user");
 			$_SESSION['loggedIn']=1;
 			$_SESSION['user']=$user;
+			echo "Logged in!";
 		}
-		if(strcmp($_REQUEST['action'], "send")){
+		if(strcmp($_REQUEST['action'], "getContacts")==0){
+			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
+				exit();
+			}
+			
+		}
+		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
@@ -31,7 +40,7 @@
 			$fh = fopen(".$user", "wb");
 			fwrite($fh, serialize($engine));
 		}
-		if(strcmp($_REQUEST['action'], "logout")){
+		if(strcmp($_REQUEST['action'], "logout")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
