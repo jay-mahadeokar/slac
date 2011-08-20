@@ -35,7 +35,8 @@
 			$engine=unserialize(fread($fh, 10000));
 			$msg = $_REQUEST['msg'];
 			$to = $_REQUEST['to'];
-			$engine->send_message($to, json_encode($msg));
+			echo "Sending $msg to $to";
+			var_dump($engine->send_message($to, json_encode($msg)));
 			fclose($fh);
 			$fh = fopen(".tmp/$user", "wb");
 			fwrite($fh, serialize($engine));
