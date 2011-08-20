@@ -29,7 +29,7 @@
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
 			$engine=unserialize($serialized_data);
-			return $engine->fetch_contact_list();
+			var_dump($engine->fetch_contact_list());
 		}
 		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
