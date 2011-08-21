@@ -157,19 +157,15 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    var contacts_len = contacts_json.length;
    for(var counter_i=0; counter_i<contacts_len;++counter_i){
    	console.log(contacts_json[counter_i]);
-   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contacts_json[counter_i]['contact']['id']+'<br/><span class="status"><em>Status Here</em></span></div>');
+   var item = Y.Node.create('<div class="contact" name="'+contacts_json[counter_i]['contact']['id']+'" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contacts_json[counter_i]['contact']['id']+'<br/><span class="status"><em>Status Here</em></span></div>');
    
    
    cb.insertBefore(item,dum);
    //item.on('dblclick', clickContact);
    item.on('click', touchContact);
-   setAvailable("contact_"+counter_i,"yes");
+   setAvailable("contact_"+counter_i,contacts_json[counter_i]['contact']['presence']['presenceState']!=-1?"yes":"no");
    }
-   var item = Y.Node.create('<div class="contact" name="Contact 2" id="contact_2" open="false"><span class="availability"></span>Contact 2</div>');
-   cb.insertBefore(item,dum);
-   //item.on('dblclick', clickContact);
-   item.on('click', touchContact);
-   setAvailable("contact_2","no");
+   
 
    /*var tab = new Y.Tab({
         label: "Test Contact 1",
