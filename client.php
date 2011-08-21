@@ -24,6 +24,7 @@
 				success: function(data){
 					
 					contacts_json=data['contacts'];
+					alert(data['contacts'][0]['contact']['id']);
 					console.log(contacts_json);
 				}	
 			})
