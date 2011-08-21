@@ -31,7 +31,7 @@ function getUserInfo($userId)
 function postLogoutAction($userId)
 {
 	$tmppath= "./.cache/users/".$userId;
-	echo $tmppath;
+	if($debug) echo $tmppath;
 	unlink($tmppath);
 }
 

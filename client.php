@@ -16,6 +16,18 @@
 			document.getElementById('textBox').setAttribute("value","");
 		}
 	</script>
+	<script>
+		var contacts_json;
+		$(document).ready(function(){
+			$.ajax({
+				url: 'do.php?action=getContacts',
+				success: function(data){
+					contacts_json = data;
+					alert(data);
+				}	
+			})
+		});
+	</script>
 </head>
 <body class="yui3-skin-sam">
 		<div id="light" class="white_content"></div>
@@ -139,12 +151,16 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    tabview.render("#demo");
    var cb = Y.one('#slac_contactbox');
    var dum = Y.one('#dummy');
-   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_1" open="false"><span class="availability"></span>Contact 1<br/><span class="status"><em>Status Here</em></span></div>');
+   var counter_i = 0;
+   for(var contact in contacts_json){
+   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+Contact 1+'<br/><span class="status"><em>Status Here</em></span></div>');
+   alert(contact);
+   
    cb.insertBefore(item,dum);
    //item.on('dblclick', clickContact);
    item.on('click', touchContact);
-   setAvailable("contact_1","yes");
-   
+   setAvailable("contact_"+counter_i,"yes");
+   }
    var item = Y.Node.create('<div class="contact" name="Contact 2" id="contact_2" open="false"><span class="availability"></span>Contact 2</div>');
    cb.insertBefore(item,dum);
    //item.on('dblclick', clickContact);

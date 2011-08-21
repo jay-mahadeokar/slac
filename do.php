@@ -78,7 +78,7 @@
 			unlink(".tmp/$user");
 			session_destroy();
 			postLogoutAction($user);
-			//header('Location: /');
+			header('Location: /');
 		}
 	}
 ?>
