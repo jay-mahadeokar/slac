@@ -20,8 +20,8 @@
 			$_SESSION['loggedIn']=1;
 			$_SESSION['user']=$user;
 			if($debug) echo "Logged in!";
-			var_dump($_REQUEST);
-			//header('Location: /');
+			if($debug) var_dump($_REQUEST);
+			header('Location: /');
 		}
 		if(strcmp($_REQUEST['action'], "getContacts")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
@@ -31,7 +31,7 @@
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
 			$engine=unserialize($serialized_data);
-			return $engine->fetch_contact_list();
+			var_dump( $engine->fetch_contact_list());
 		}
 		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
