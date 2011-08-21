@@ -22,8 +22,13 @@
 	</script>
 </head>
 <body class="yui3-skin-sam">
+
 		<div id="light" class="white_content"></div>
 		<div id="fade" class="black_overlay"></div>
+<div id="header">
+<div id="logo"><img src="images/logo.gif" width="250px"/></div>
+<div id="logout"><a href="do.php?action=logout">Logout</a></div>
+</div>
 <div id="demo">
 </div>
 

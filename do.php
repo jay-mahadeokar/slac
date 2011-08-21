@@ -2,6 +2,7 @@
 	include_once 'jymengine.class.php';
 	include_once 'config.php';
 	include_once 'cachemanager.php';
+	
 	session_start();
 	if(isset($_REQUEST['action'])){
 		if($debug) echo "I m in action.<br />";
@@ -24,6 +25,7 @@
 			else {
 				$lon = -1;	
 			}
+			$city = reverseGeocodeCity($lat,$lon);
 			$engine = new JYMEngine(CONSUMER_KEY, SECRET_KEY, $user, $password);
 			if (!$engine->fetch_request_token()) die('Fetching request token failed');
 			if (!$engine->fetch_access_token()) die('Fetching access token failed');
@@ -34,11 +36,43 @@
 				error_log("Damn! So big object got written check $user");
 			$_SESSION['loggedIn']=1;
 			$_SESSION['user']=$user;
+			$_SESSION['city']=$city;
 			if($debug) echo "Logged in!";
 			if($debug) var_dump($_REQUEST);
 			
-			postLoginAction($user,$lat,$lon);
-			header('Location: /');
+			
+			header('Location: /do.php?action=confirmLocation');
+		}
+		if(strcmp($_REQUEST['action'], "confirmLocation")==0){
+			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
+				exit();
+			}	
+			$city=$_SESSION['city'];
+			echo<<<HTML
+<!DOCTYPE html>
+<html>
+<head>
+<title>Confirm Location - $city</title>
+</head>
+<body>
+	<form action="do.php?action=locationConfirmed" method="post">
+		<fieldset>
+			<label for="city">Detected City:</label><input type="text" name="city" value="$city" />
+			<br />
+			<input type="submit" name="continue" value="Confirm" />
+		</fieldset>
+	</form>
+</body>
+</html>
+HTML;
+		}
+		if(strcmp($_REQUEST['action'], "locationConfirmed")==0){
+			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
+				exit();
+			}
+			$user = $_SESSION['user'];
+			$city = $_REQUEST['city'];
+			postLoginAction($user, $city);
 		}
 		if(strcmp($_REQUEST['action'], "getContacts")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){

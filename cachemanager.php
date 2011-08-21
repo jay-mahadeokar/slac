@@ -35,10 +35,10 @@ function postLogoutAction($userId)
 	unlink($tmppath);
 }
 
-function postLoginAction($userId, $lat, $lon)
+function postLoginAction($userId, $city)
 {
 	include_once "./utils/geo.php";
-	$city = reverseGeocodeCity($lat,$lon);
+	//$city = reverseGeocodeCity($lat,$lon);
 	
 	$weather = getWeatherDetails($city);
 	$events = getEventDetails($city);

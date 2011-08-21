@@ -7,7 +7,36 @@
     -o-user-select: none;
 	vertical-align: middle;
 }
+body{
+	background: #c4c4c4;
+}
 
+#header{
+	width:100%;
+	height: 50px;
+}
+
+#logo{
+	float:left;
+}
+
+#logout{
+	float:right;
+    -moz-border-radius: 5px 5px 5px 5px;
+    background: url("../images/button-bg.png") repeat-x scroll center top transparent;
+    border: 1px solid #999999;
+    color: black;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+    width: 100px;
+    text-align:center;
+}
+
+#logout a{
+		text-decoration:none;
+		color: black;
+}
 .dummy{
 	display:none;
 }
