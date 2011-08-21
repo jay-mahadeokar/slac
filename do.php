@@ -73,6 +73,7 @@ HTML;
 			$user = $_SESSION['user'];
 			$city = $_REQUEST['city'];
 			postLoginAction($user, $city);
+			header('Location: /');
 		}
 		if(strcmp($_REQUEST['action'], "getContacts")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
