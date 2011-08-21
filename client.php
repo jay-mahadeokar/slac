@@ -22,8 +22,8 @@
 			$.ajax({
 				url: 'do.php?action=getContacts',
 				success: function(data){
-					contacts_json = $.parseJSON(data);
-					alert(contacts_json);
+					var returned_json = $.parseJSON(data);
+					console.log(returned_json);
 				}	
 			})
 		});
