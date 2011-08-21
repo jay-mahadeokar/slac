@@ -154,7 +154,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    var cb = Y.one('#slac_contactbox');
    var dum = Y.one('#dummy');
    var counter_i = 0;
-   var contacts_len = contacts_json.length;
+   var contacts_len = 2;
    for(var counter_i=0; counter_i<contacts_len;++counter_i){
    	console.log(contacts_json[counter_i]);
    var item = Y.Node.create('<div class="contact" name="'+contacts_json[counter_i]['contact']['id']+'" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contacts_json[counter_i]['contact']['id']+'<br/><span class="status"><em>Status Here</em></span></div>');
