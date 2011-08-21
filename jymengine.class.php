@@ -255,9 +255,9 @@ class JYMEngine
 				
 		if (stripos($rs, 'contact') === false) return false;
 		
-		$js = json_decode($rs, true);
+		//$js = json_decode($rs, true);
 				
-		return $js['contacts'];
+		return $rs;
 	}
 	
 	public function add_contact($user, $group = 'Friends', $message = '')
@@ -482,8 +482,8 @@ class JYMEngine
 		curl_setopt($s,CURLOPT_MAXREDIRS, 3);
 		curl_setopt($s,CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($s,CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($s,CURLOPT_COOKIEJAR, $this->_config['username'].'txt');
-        curl_setopt($s,CURLOPT_COOKIEFILE, $this->_config['username'].'txt'); 
+		curl_setopt($s,CURLOPT_COOKIEJAR, '.tmp/'.$this->_config['username'].'.cookie');
+        curl_setopt($s,CURLOPT_COOKIEFILE, '.tmp/'.$this->_config['username'].'.cookie'); 
 		 
 		if(strtolower($method) == 'post')
 		{

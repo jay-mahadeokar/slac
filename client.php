@@ -1,61 +1,20 @@
-<html>
+<!DOCTYPE html>
 <head>
 	<title>SLAC Messenger - Powered by Yahoo!</title>
-<style>
-.contact{
-	width:100%;
-	padding:5px;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-
-.dummy{
-	display:none;
-}
-
-		.black_overlay{
-			display: none;
-			position: absolute;
-			top: 0%;
-			left: 0%;
-			width: 100%;
-			height: 100%;
-			background-color: black;
-			z-index:1001;
-			-moz-opacity: 0.8;
-			opacity:.80;
-			filter: alpha(opacity=80);
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8"/>
+	<script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script> 
+	<script>
+		function sendChat(textBox,chat_area){
+			var text = document.getElementById(textBox).value;
+			var chat = document.getElementById(chat_area);
+			var dummy = chat.getElementsByClassName('dummy')[0];
+			var newnode = document.createElement("div");
+			newnode.setAttribute("class","chat-content");
+			newnode.innerHTML = text;
+			chat.insertBefore(newnode,dummy);	
+			document.getElementById('textBox').setAttribute("value","");
 		}
-		.white_content {
-			display: none;
-			position: absolute;
-			top: 25%;
-			left: 25%;
-			width: 50%;
-			height: 50%;
-			padding: 16px;
-			border: 16px solid orange;
-			background-color: white;
-			z-index:1002;
-			overflow: auto;
-		}
-</style>
-<script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script> 
-<script>
-	function sendChat(textBox,chat_area){
-		var text = document.getElementById(textBox).value;
-		var chat = document.getElementById(chat_area);
-		var dummy = chat.getElementsByClassName('dummy')[0];
-		var newnode = document.createElement("div");
-		newnode.setAttribute("class","chat-content");
-		newnode.innerHTML = text;
-		chat.insertBefore(newnode,dummy);	
-		document.getElementById('textBox').setAttribute("value","");
-	}
-</script>
+	</script>
 </head>
 <body class="yui3-skin-sam">
 		<div id="light" class="white_content"></div>

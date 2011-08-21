@@ -6,9 +6,22 @@
 		if($debug) echo "I m in action.<br />";
 		$action = $_REQUEST['action'];
 		if(strcmp($_REQUEST['action'], "login")==0){
+			include_once 'cachemanager.php';
 			if($debug) echo "I m in action login";
 			$user = $_REQUEST['user'];
 			$password = $_REQUEST['password'];
+			if(isset($_REQUEST['lat']))	{
+				$lat = $_REQUEST['lat'];
+			}
+			else {
+				$lat = -1;	
+			}
+			if(isset($_REQUEST['lon']))	{
+				$lon = $_REQUEST['lon'];
+			}
+			else {
+				$lon = -1;	
+			}
 			$engine = new JYMEngine(CONSUMER_KEY, SECRET_KEY, $user, $password);
 			if (!$engine->fetch_request_token()) die('Fetching request token failed');
 			if (!$engine->fetch_access_token()) die('Fetching access token failed');
@@ -21,6 +34,7 @@
 			$_SESSION['user']=$user;
 			if($debug) echo "Logged in!";
 			if($debug) var_dump($_REQUEST);
+			postLoginAction($user,$lat,$lon);
 			header('Location: /');
 		}
 		if(strcmp($_REQUEST['action'], "getContacts")==0){
@@ -31,7 +45,7 @@
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
 			$engine=unserialize($serialized_data);
-			var_dump( $engine->fetch_contact_list());
+			$engine->fetch_contact_list();
 		}
 		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
@@ -62,6 +76,7 @@
 			$engine->signoff();
 			unlink(".tmp/$user");
 			session_destroy();
+			postLogoutAction($user);
 			header('Location: /');
 		}
 	}
