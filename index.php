@@ -45,7 +45,7 @@
 				<label for="login">Username:</label><input type="text" id="login" name="user" /><div class="clear"></div>
 				<label for="password">Password:</label><input type="password" id="password" name="password" /><div class="clear"></div>
 				<br />
-				<input type="submit" style="margin: -20px 0 0 287px;" class="button" name="Login" value="Blow me off!" />
+				<input type="submit" style="margin: -20px 0 0 287px;" class="button" name="Login" value="Turn me ON!" />
 			</fieldset>
 		</form>
 	</body>
