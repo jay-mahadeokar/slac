@@ -99,7 +99,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 					id: 'slac_'+elid,
 					label: el.getAttribute("name"),
 					from: elid,
-				});el.getAttribute("cid")
+				});
 				var content = '<div class="content">Contact Details</div><div class="chat" id="chat_area_'+elid+'"><span class="dummy"></span><input type="text" id="textBox_'+elid+'"/><input type="submit" value="submit" onclick="sendChat(\'textBox_'+elid+'\',\'chat_area_'+elid+'\')"/></div>';
 				tab.set('content',content);
 				tab.set("from",el.getAttribute("id"));
@@ -110,7 +110,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 			}			
 		}else{
 			$.ajax({
-				url: 'do.php?action=showInfo&user='+el.getAttribute("name"),
+				url: 'do.php?action=showInfo&user='+el.parentNode.parentNode.getAttribute("name"),
 				success: function(data){
 					showlightBox(data);
 				}
