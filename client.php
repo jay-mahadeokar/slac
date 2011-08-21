@@ -5,15 +5,21 @@
 	<script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script> 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-		function sendChat(textBox,chat_area){
+		function sendChat(user,textBox,chat_area){
 			var text = document.getElementById(textBox).value;
 			var chat = document.getElementById(chat_area);
-			var dummy = chat.getElementsByClassName('dummy')[0];
-			var newnode = document.createElement("div");
-			newnode.setAttribute("class","chat-content");
-			newnode.innerHTML = text;
-			chat.insertBefore(newnode,dummy);	
-			document.getElementById('textBox').setAttribute("value","");
+			$.ajax({
+				url: 'do.php?action=send&user='+encodeURIComponent(user)+'&msg='+encodeURIComponent(text),
+				success: function(data){
+					var dummy = chat.getElementsByClassName('dummy')[0];
+					var newnode = document.createElement("div");
+					newnode.setAttribute("class","chat-content");
+					newnode.innerHTML = text;
+					chat.insertBefore(newnode,dummy);	
+					document.getElementById('textBox').setAttribute("value","");		
+				}
+			});
+			
 		}
 	</script>
 	<script>
@@ -26,7 +32,7 @@
 		<div id="light" class="white_content"></div>
 		<div id="fade" class="black_overlay"></div>
 <div id="header">
-<div id="logo"><img src="images/logo.gif" width="250px"/></div>
+<div id="logo"><img src="images/logo.gif" width="225px"/></div>
 <div id="logout"><a href="do.php?action=logout">Logout</a></div>
 </div>
 <div id="demo">
@@ -105,7 +111,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 					label: el.getAttribute("name"),
 					from: elid,
 				});
-				var content = '<div class="content">Contact Details</div><div class="chat" id="chat_area_'+elid+'"><span class="dummy"></span><input type="text" id="textBox_'+elid+'"/><input type="submit" value="submit" onclick="sendChat(\'textBox_'+elid+'\',\'chat_area_'+elid+'\')"/></div>';
+				var content = '<div class="content">Contact Details</div><div class="chat" id="chat_area_'+elid+'"><span class="dummy"></span><input type="text" id="textBox_'+elid+'"/><input type="submit" value="submit" onclick="sendChat("'+el.getAttribute("name")+'",\'textBox_'+elid+'\',\'chat_area_'+elid+'\')"/></div>';
 				tab.set('content',content);
 				tab.set("from",el.getAttribute("id"));
 				tabview.add(tab);
