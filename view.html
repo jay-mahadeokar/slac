@@ -1,0 +1,29 @@
+<html>
+<head>
+<script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script> 
+</head>
+<body>
+<div id="demo">
+    <ul>
+        <li><a href="#foo">foo</a></li>
+        <li><a href="#bar">bar</a></li>
+        <li><a href="#baz">baz</a></li>
+    </ul>
+    <div>
+        <div id="foo">foo content</div>
+        <div id="bar">bar content</div>
+        <div id="baz">baz content</div>
+    </div>
+</div>
+
+<script>
+YUI().use('tabview', function(Y) {
+    var tabview = new Y.TabView({
+        srcNode: '#demo'
+    });
+
+    tabview.render();
+});
+</script>
+</body>
+</html>
