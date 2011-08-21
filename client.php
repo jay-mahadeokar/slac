@@ -3,6 +3,7 @@
 	<title>SLAC Messenger - Powered by Yahoo!</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8"/>
 	<script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 		function sendChat(textBox,chat_area){
 			var text = document.getElementById(textBox).value;
