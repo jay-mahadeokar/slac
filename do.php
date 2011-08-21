@@ -2,7 +2,7 @@
 	include_once 'jymengine.class.php';
 	include_once 'config.php';
 	include_once 'cachemanager.php';
-	
+	include_once 'utils/geo.php';
 	session_start();
 	if(isset($_REQUEST['action'])){
 		if($debug) echo "I m in action.<br />";
