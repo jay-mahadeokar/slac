@@ -105,7 +105,7 @@ HTML;
 			$msg = $_REQUEST['msg'];
 			$to = $_REQUEST['to'];
 			if($debug) echo "Sending $msg to $to";
-			var_dump($engine->send_message($to, json_encode($msg)));
+			$engine->send_message($to, json_encode($msg));
 			fclose($fh);
 			$fh = fopen(".tmp/$user", "wb");
 			fwrite($fh, serialize($engine));

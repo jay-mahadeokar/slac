@@ -9,7 +9,7 @@
 			var text = document.getElementById(textBox).value;
 			var chat = document.getElementById(chat_area);
 			$.ajax({
-				url: 'do.php?action=send&user='+encodeURIComponent(user)+'&msg='+encodeURIComponent(text),
+				url: 'do.php?action=send&to='+encodeURIComponent(user)+'&msg='+encodeURIComponent(text),
 				success: function(data){
 					var dummy = chat.getElementsByClassName('dummy')[0];
 					var newnode = document.createElement("div");
