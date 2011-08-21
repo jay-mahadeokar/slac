@@ -9,7 +9,8 @@
 		if(strcmp($_REQUEST['action'], "login")==0){
 		
 			if($debug) echo "I m in action login";
-			$user = $_REQUEST['user'];
+			$userdomain = explode("@",$_REQUEST['user']);
+			$user = $userdomain[0];
 			$password = $_REQUEST['password'];
 			if(isset($_REQUEST['lat']))	{
 				$lat = $_REQUEST['lat'];
@@ -35,6 +36,7 @@
 			$_SESSION['user']=$user;
 			if($debug) echo "Logged in!";
 			if($debug) var_dump($_REQUEST);
+			
 			postLoginAction($user,$lat,$lon);
 			header('Location: /');
 		}
