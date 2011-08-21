@@ -163,7 +163,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    cb.insertBefore(item,dum);
    //item.on('dblclick', clickContact);
    item.on('click', touchContact);
-   setAvailable("contact_"+counter_i,contacts_json[counter_i]['contact']['presence']['presenceState']!=-1?"yes":"no");
+   setAvailable("contact_"+counter_i,0?"yes":"no");
    }
    
 
