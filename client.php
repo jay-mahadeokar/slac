@@ -1,61 +1,25 @@
-<html>
+<!DOCTYPE html>
 <head>
 	<title>SLAC Messenger - Powered by Yahoo!</title>
-<style>
-.contact{
-	width:100%;
-	padding:5px;
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-
-.dummy{
-	display:none;
-}
-
-		.black_overlay{
-			display: none;
-			position: absolute;
-			top: 0%;
-			left: 0%;
-			width: 100%;
-			height: 100%;
-			background-color: black;
-			z-index:1001;
-			-moz-opacity: 0.8;
-			opacity:.80;
-			filter: alpha(opacity=80);
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8"/>
+	<script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		function sendChat(textBox,chat_area){
+			var text = document.getElementById(textBox).value;
+			var chat = document.getElementById(chat_area);
+			var dummy = chat.getElementsByClassName('dummy')[0];
+			var newnode = document.createElement("div");
+			newnode.setAttribute("class","chat-content");
+			newnode.innerHTML = text;
+			chat.insertBefore(newnode,dummy);	
+			document.getElementById('textBox').setAttribute("value","");
 		}
-		.white_content {
-			display: none;
-			position: absolute;
-			top: 25%;
-			left: 25%;
-			width: 50%;
-			height: 50%;
-			padding: 16px;
-			border: 16px solid orange;
-			background-color: white;
-			z-index:1002;
-			overflow: auto;
-		}
-</style>
-<script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script> 
-<script>
-	function sendChat(textBox,chat_area){
-		var text = document.getElementById(textBox).value;
-		var chat = document.getElementById(chat_area);
-		var dummy = chat.getElementsByClassName('dummy')[0];
-		var newnode = document.createElement("div");
-		newnode.setAttribute("class","chat-content");
-		newnode.innerHTML = text;
-		chat.insertBefore(newnode,dummy);	
-		document.getElementById('textBox').setAttribute("value","");
-	}
-</script>
+	</script>
+	<script>
+		
+		
+	</script>
 </head>
 <body class="yui3-skin-sam">
 		<div id="light" class="white_content"></div>
@@ -64,15 +28,16 @@
 </div>
 
 <script type="text/javascript">
+
 YUI().use('tabview', 'escape', 'plugin', function(Y) {
 	var el = document.getElementById('fade');
 	el.addEventListener("click", closelightBox, false);
-	function setAvailable(contact_id,state){
+	function setAvailable(contact_id,name,state){
 		var el = document.getElementById(contact_id).getElementsByClassName("availability")[0];
 		if(state == "yes"){
-			el.innerHTML = '<img src="images/aim_active.png" cid="'+contact_id+'" id="fraud"/>';
+			el.innerHTML = '<img src="images/aim_active.png" cid="'+contact_id+'" name="'+ name+'" id="fraud"/>';
 		}else{
-			el.innerHTML = '<img src="images/aim_dark.png" cid="'+contact_id+'"id="fraud"/>';
+			el.innerHTML = '<img src="images/aim_dark.png" cid="'+contact_id+'" name="'+ name+'" id="fraud"/>';
 		}
 	}
 	
@@ -144,27 +109,16 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 				el.style.display = 'block';
 			}			
 		}else{
-			showlightBox(el.getAttribute("cid"));
-		}
-		//alert('event: ' + e.type + ' target: ' + e.target.get('id')); 
-	};
-	var clickContact = function(e) {
-		e.preventDefault();
-		var el = e.target;
-		if(el.getAttribute("open") == "false"){
-			var tab = new Y.Tab({
-				label: el.getAttribute("name"),
-				from: el.getAttribute("id"),
-				content: 'loading...',
+			$.ajax({
+				url: 'do.php?action=showInfo&user='+el.getAttribute("name"),
+				success: function(data){
+					showlightBox(data);
+				}
 			});
-			tab.set("from",el.getAttribute("id"));
-			tabview.add(tab);
-			el.setAttribute("open","true");
-		}else{
-			el.style.display = 'block';
 		}
 		//alert('event: ' + e.type + ' target: ' + e.target.get('id')); 
 	};
+	
     var tabview = new Y.TabView({
 		id:'slac_maintab',
         children: [{
@@ -179,17 +133,29 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    tabview.render("#demo");
    var cb = Y.one('#slac_contactbox');
    var dum = Y.one('#dummy');
-   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_1" open="false"><span class="availability"></span>Contact 1<br/><span class="status"><em>Status Here</em></span></div>');
-   cb.insertBefore(item,dum);
-   //item.on('dblclick', clickContact);
-   item.on('click', touchContact);
-   setAvailable("contact_1","yes");
+   var contacts_json;
+		
+			$.ajax({
+				url: 'do.php?action=getContacts',
+				success: function(data){
+					var returned_data = $.parseJSON(data);
+					contacts_json=returned_data['contacts'];
+					
+					var counter_i = 0;
+				   var contacts_len = 2;
+				   for(var counter_i=0; counter_i<contacts_len;++counter_i){
+				   var item = Y.Node.create('<div class="contact" name="'+contacts_json[counter_i]['contact']['id']+'" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contacts_json[counter_i]['contact']['id']+'<br/><span class="status"><em>Status Here</em></span></div>');
+				   
+				   
+				   cb.insertBefore(item,dum);
+				   //item.on('dblclick', clickContact);
+				   item.on('click', touchContact);
+				   setAvailable("contact_"+counter_i,contacts_json[counter_i]['contact']['id'],contacts_json[counter_i]['contact']['presence']['presenceState']!=-1?"yes":"no");
+				   }
+				}	
+			});
    
-   var item = Y.Node.create('<div class="contact" name="Contact 2" id="contact_2" open="false"><span class="availability"></span>Contact 2</div>');
-   cb.insertBefore(item,dum);
-   //item.on('dblclick', clickContact);
-   item.on('click', touchContact);
-   setAvailable("contact_2","no");
+   
 
    /*var tab = new Y.Tab({
         label: "Test Contact 1",

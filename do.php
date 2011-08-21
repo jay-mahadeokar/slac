@@ -1,14 +1,29 @@
 <?php
 	include_once 'jymengine.class.php';
 	include_once 'config.php';
+	include_once 'cachemanager.php';
 	session_start();
 	if(isset($_REQUEST['action'])){
 		if($debug) echo "I m in action.<br />";
 		$action = $_REQUEST['action'];
 		if(strcmp($_REQUEST['action'], "login")==0){
+		
 			if($debug) echo "I m in action login";
-			$user = $_REQUEST['user'];
+			$userdomain = explode("@",$_REQUEST['user']);
+			$user = $userdomain[0];
 			$password = $_REQUEST['password'];
+			if(isset($_REQUEST['lat']))	{
+				$lat = $_REQUEST['lat'];
+			}
+			else {
+				$lat = -1;	
+			}
+			if(isset($_REQUEST['lon']))	{
+				$lon = $_REQUEST['lon'];
+			}
+			else {
+				$lon = -1;	
+			}
 			$engine = new JYMEngine(CONSUMER_KEY, SECRET_KEY, $user, $password);
 			if (!$engine->fetch_request_token()) die('Fetching request token failed');
 			if (!$engine->fetch_access_token()) die('Fetching access token failed');
@@ -20,6 +35,9 @@
 			$_SESSION['loggedIn']=1;
 			$_SESSION['user']=$user;
 			if($debug) echo "Logged in!";
+			if($debug) var_dump($_REQUEST);
+			
+			postLoginAction($user,$lat,$lon);
 			header('Location: /');
 		}
 		if(strcmp($_REQUEST['action'], "getContacts")==0){
@@ -30,7 +48,14 @@
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
 			$engine=unserialize($serialized_data);
-			return $engine->fetch_contact_list();
+			echo $engine->fetch_contact_list();
+		}
+		if(strcmp($_REQUEST['action'], "showInfo")==0){
+			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
+				exit();
+			}
+			$user = $_REQUEST['user'];
+			echo getUserInfo($user);
 		}
 		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
@@ -54,6 +79,7 @@
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
+
 			$user = $_SESSION['user'];
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
@@ -61,6 +87,7 @@
 			$engine->signoff();
 			unlink(".tmp/$user");
 			session_destroy();
+			postLogoutAction($user);
 			header('Location: /');
 		}
 	}
