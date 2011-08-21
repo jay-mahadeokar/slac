@@ -32,12 +32,12 @@
 YUI().use('tabview', 'escape', 'plugin', function(Y) {
 	var el = document.getElementById('fade');
 	el.addEventListener("click", closelightBox, false);
-	function setAvailable(contact_id,state){
+	function setAvailable(contact_id,name,state){
 		var el = document.getElementById(contact_id).getElementsByClassName("availability")[0];
 		if(state == "yes"){
-			el.innerHTML = '<img src="images/aim_active.png" cid="'+contact_id+'" id="fraud"/>';
+			el.innerHTML = '<img src="images/aim_active.png" cid="'+contact_id+'" name="'+ name+'" id="fraud"/>';
 		}else{
-			el.innerHTML = '<img src="images/aim_dark.png" cid="'+contact_id+'"id="fraud"/>';
+			el.innerHTML = '<img src="images/aim_dark.png" cid="'+contact_id+'" name="'+ name+'" id="fraud"/>';
 		}
 	}
 	
@@ -110,7 +110,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 			}			
 		}else{
 			$.ajax({
-				url: 'do.php?action=showInfo&user='+el.parentNode.parentNode.getAttribute("name"),
+				url: 'do.php?action=showInfo&user='+el.getAttribute("name"),
 				success: function(data){
 					showlightBox(data);
 				}
@@ -150,7 +150,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 				   cb.insertBefore(item,dum);
 				   //item.on('dblclick', clickContact);
 				   item.on('click', touchContact);
-				   setAvailable("contact_"+counter_i,contacts_json[counter_i]['contact']['presence']['presenceState']!=-1?"yes":"no");
+				   setAvailable("contact_"+counter_i,contacts_json[counter_i]['contact']['id'],contacts_json[counter_i]['contact']['presence']['presenceState']!=-1?"yes":"no");
 				   }
 				}	
 			});
