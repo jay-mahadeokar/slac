@@ -1,3 +1,11 @@
+<?php
+	include_once 'config.php';
+	session_start();
+	if(isset($_SESSION['loggedIn'])&&$_SESSION['loggedIn']==1){
+		include 'client.php';
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
