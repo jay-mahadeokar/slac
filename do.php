@@ -69,6 +69,7 @@
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
+			include_once 'cachemanager.php';
 			$user = $_SESSION['user'];
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
