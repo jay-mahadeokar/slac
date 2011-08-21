@@ -22,10 +22,11 @@
 			$.ajax({
 				url: 'do.php?action=getContacts',
 				success: function(data){
-					contacts_json = ($.parseJSON(data))['contacts'];
-					//contacts_json=returned_data;
-					alert(contacts_json[0]['contact']['id']);
-					console.log(contacts_json);
+					var returned_data = $.parseJSON(data);
+					contacts_json=returned_data;
+					
+					alert(returned_data['contacts'][0]['contact']['id']);
+					console.log(returned_data);
 				}	
 			})
 		});
