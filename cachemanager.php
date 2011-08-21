@@ -41,10 +41,10 @@ function postLoginAction($userId, $lat, $lon)
 	
 	$output = "";
 		//Inserting weather info
-		$output .= "<h2> Weather at " . $userId . "'s place</h2><br/>";
+		$output .= "<div class='heading'> Weather at " . $userId . "'s place</div>";
 		$output .= $weather->query->results->weather->rss->channel->item->description;
 		
-		$output .= "<h2> News, Buzz and stuff.. </h2><br/>";
+		$output .= "<div class='heading'> News, Buzz and stuff.. </div><br/>";
 		$results = $news->query->results->results;
 
 		foreach ($results as $result) {
@@ -60,7 +60,7 @@ function postLoginAction($userId, $lat, $lon)
 		$results = $events->query->results->event;
 		if($results != NULL)
 		{
-			$output .= "<h2> Watch out for these events!! </h2><br/>";
+			$output .= "<div class='heading'> Watch out for these events!! </div><br/>";
 		
 			foreach ($results as $result) {
 				$output .= "<div class='newstitle'>"; 
