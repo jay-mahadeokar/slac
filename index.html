@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SLAC Messenger - Powered by Yahoo!</title>
+		<script src="http://code.google.com/apis/gears/gears_init.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/libs/geo.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<script>
+			if(geo_position_js.init()){
+				geo_position_js.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true,options:5000});
+			}
+			else{
+				alert("Functionality not available");
+			}
+	
+			function success_callback(p)
+			{
+				alert('lat='+p.coords.latitude.toFixed(2)+';lon='+p.coords.longitude.toFixed(2));
+			}
+			
+			function error_callback(p)
+			{
+				alert('error='+p.message);
+			}		
+		</script>
+		<form action="do.php" method="post">
+			<label for="user">Username:</label><input type="text" name="user" /><br />
+			<label for="password">Password:</label><input type="password" name="password" /><br />
+			<input type="submit" name="Login" value="Blow me off!" />
+		</form>
+	</body>
+	
+</html>
