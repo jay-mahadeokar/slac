@@ -46,10 +46,10 @@ function postLoginAction($userId, $city)
 	
 	$output = "";
 		//Inserting weather info
-		$output .= "<div class='heading'> Weather at " . $userId . "'s place</div>";
+		$output .= "<h3>Weather at " . $userId . "'s place</h3>";
 		$output .= $weather->query->results->weather->rss->channel->item->description;
 		
-		$output .= "<div class='heading'> News, Buzz and stuff.. </div><br/>";
+		$output .= "<br /><h3>News, Buzz and stuff.. </h3><br/>";
 		$results = $news->query->results->results;
 		
 		foreach ($results as $result) {
