@@ -39,7 +39,7 @@
 		</script>
 	</head>
 	<body>
-		<form id="login-form" action="do.php" method="post">
+		<form id="login-form" action="do.php?action=login" method="post">
 			<fieldset>
 				<legend>Log in</legend>
 				<label for="login">Username:</label><input type="text" id="login" name="user" /><div class="clear"></div>
