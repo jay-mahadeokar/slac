@@ -49,6 +49,19 @@ body{
 	display:none;
 }
 
+.news{
+	padding: 5px;
+	border: 1px solid #3A3A3A;
+}
+.newstitle{
+	font-weight: bold;
+	background: #999999;
+}
+.newscontent{
+	font-weight: normal !important;
+	
+}
+
 		.black_overlay{
 			display: none;
 			position: absolute;

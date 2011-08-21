@@ -51,14 +51,16 @@ function postLoginAction($userId, $city)
 		
 		$output .= "<div class='heading'> News, Buzz and stuff.. </div><br/>";
 		$results = $news->query->results->results;
-
+		
 		foreach ($results as $result) {
+			$output .= "<div class='news'>";
 			$output .= "<div class='newstitle'>"; 
 			$output .= $result->title;
 			$output .= "</div>";
 			
 			$output .= "<div class='newscontent'>"; 
 			$output .= $result->content;
+			$output .= "</div>";
 			$output .= "</div>";
 		}
 		
