@@ -99,7 +99,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 					id: 'slac_'+elid,
 					label: el.getAttribute("name"),
 					from: elid,
-				});
+				});el.getAttribute("cid")
 				var content = '<div class="content">Contact Details</div><div class="chat" id="chat_area_'+elid+'"><span class="dummy"></span><input type="text" id="textBox_'+elid+'"/><input type="submit" value="submit" onclick="sendChat(\'textBox_'+elid+'\',\'chat_area_'+elid+'\')"/></div>';
 				tab.set('content',content);
 				tab.set("from",el.getAttribute("id"));
@@ -109,27 +109,16 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 				el.style.display = 'block';
 			}			
 		}else{
-			showlightBox(el.getAttribute("cid"));
-		}
-		//alert('event: ' + e.type + ' target: ' + e.target.get('id')); 
-	};
-	var clickContact = function(e) {
-		e.preventDefault();
-		var el = e.target;
-		if(el.getAttribute("open") == "false"){
-			var tab = new Y.Tab({
-				label: el.getAttribute("name"),
-				from: el.getAttribute("id"),
-				content: 'loading...',
+			$.ajax({
+				url: 'do.php?action=showInfo&user='+el.getAttribute("name"),
+				success: function(data){
+					showlightBox(data);
+				}
 			});
-			tab.set("from",el.getAttribute("id"));
-			tabview.add(tab);
-			el.setAttribute("open","true");
-		}else{
-			el.style.display = 'block';
 		}
 		//alert('event: ' + e.type + ' target: ' + e.target.get('id')); 
 	};
+	
     var tabview = new Y.TabView({
 		id:'slac_maintab',
         children: [{

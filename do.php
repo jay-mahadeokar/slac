@@ -1,12 +1,13 @@
 <?php
 	include_once 'jymengine.class.php';
 	include_once 'config.php';
+	include_once 'cachemanager.php';
 	session_start();
 	if(isset($_REQUEST['action'])){
 		if($debug) echo "I m in action.<br />";
 		$action = $_REQUEST['action'];
 		if(strcmp($_REQUEST['action'], "login")==0){
-			include_once 'cachemanager.php';
+		
 			if($debug) echo "I m in action login";
 			$user = $_REQUEST['user'];
 			$password = $_REQUEST['password'];
@@ -47,6 +48,13 @@
 			$engine=unserialize($serialized_data);
 			echo $engine->fetch_contact_list();
 		}
+		if(strcmp($_REQUEST['action'], "showInfo")==0){
+			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
+				exit();
+			}
+			$user = $_REQUEST['user'];
+			echo getUserInfo($user);
+		}
 		if(strcmp($_REQUEST['action'], "send")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
@@ -69,7 +77,7 @@
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
 				exit();
 			}
-			include_once 'cachemanager.php';
+
 			$user = $_SESSION['user'];
 			$fh = fopen(".tmp/$user", "rb");
 			$serialized_data= fread($fh, 10000);
