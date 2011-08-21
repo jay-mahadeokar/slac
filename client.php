@@ -23,7 +23,8 @@
 				url: 'do.php?action=getContacts',
 				success: function(data){
 					var returned_json = $.parseJSON(data);
-					console.log(returned_json);
+					contacts_json=returned_json.contacts;
+					console.log(contacts_json);
 				}	
 			})
 		});
