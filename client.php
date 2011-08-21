@@ -111,7 +111,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 					label: el.getAttribute("name"),
 					from: elid,
 				});
-				var content = '<div class="content">Contact Details</div><div class="chat" id="chat_area_'+elid+'"><span class="dummy"></span><input type="text" id="textBox_'+elid+'"/><input type="submit" value="submit" onclick="sendChat("'+el.getAttribute("name")+'",\'textBox_'+elid+'\',\'chat_area_'+elid+'\')"/></div>';
+				var content = '<div class="content">Contact Details</div><div class="chat" id="chat_area_'+elid+'"><span class="dummy"></span><input type="text" id="textBox_'+elid+'"/><input type="submit" value="submit" onclick="sendChat(\''+el.getAttribute("name")+'\',\'textBox_'+elid+'\',\'chat_area_'+elid+'\')"/></div>';
 				tab.set('content',content);
 				tab.set("from",el.getAttribute("id"));
 				tabview.add(tab);
