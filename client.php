@@ -18,7 +18,7 @@
 	</script>
 	<script>
 		var contacts_json;
-		$(document).ready(function(){
+		
 			$.ajax({
 				url: 'do.php?action=getContacts',
 				success: function(data){
@@ -30,8 +30,8 @@
 					
 					console.log(contacts_json);
 				}	
-			})
-		});
+			});
+		
 	</script>
 </head>
 <body class="yui3-skin-sam">
