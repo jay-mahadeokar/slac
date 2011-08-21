@@ -24,7 +24,7 @@ function getUserInfo($userId)
 		return $result;	
 	}	
 	else
-		return "User Not Online";
+		return "USER IS NOT ONLINE ON OUR SYSTEM!!  Seems (s)he doesn't like to have fun! :P";
 	
 }
 
