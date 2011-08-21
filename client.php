@@ -152,10 +152,6 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 					var returned_data = $.parseJSON(data);
 					contacts_json=returned_data['contacts'];
 					
-					alert(returned_data['contacts'][0]['contact']['id']);
-					alert(returned_data['contacts'][1]['contact']['id']);
-					
-					console.log(contacts_json);
 					var counter_i = 0;
 				   var contacts_len = 2;
 				   for(var counter_i=0; counter_i<contacts_len;++counter_i){
@@ -165,7 +161,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
 				   cb.insertBefore(item,dum);
 				   //item.on('dblclick', clickContact);
 				   item.on('click', touchContact);
-				   setAvailable("contact_"+counter_i,0?"yes":"no");
+				   setAvailable("contact_"+counter_i,contacts_json[counter_i]['contact']['presence']['presenceState']!=-1?"yes":"no");
 				   }
 				}	
 			});
