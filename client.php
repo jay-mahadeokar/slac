@@ -153,9 +153,10 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    var cb = Y.one('#slac_contactbox');
    var dum = Y.one('#dummy');
    var counter_i = 0;
-   for(var contact in contacts_json){
-   	console.log(contact);
-   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contact.contact.id+'<br/><span class="status"><em>Status Here</em></span></div>');
+   var contacts_len = contacts_json.length;
+   for(var counter_i=0; counter_i<contacts_len;++counter_i){
+   	console.log(contacts_json[counter_i]);
+   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contacts_json[counter_i].contact.id+'<br/><span class="status"><em>Status Here</em></span></div>');
    alert(contact);
    
    cb.insertBefore(item,dum);
