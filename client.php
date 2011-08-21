@@ -22,9 +22,9 @@
 			$.ajax({
 				url: 'do.php?action=getContacts',
 				success: function(data){
-					
-					contacts_json=data['contacts'];
-					alert(data['contacts'][0]['contact']['id']);
+					var returned_data = $.parseJSON(data);
+					contacts_json=returned_data['contacts'];
+					alert(returned_data['contacts'][0]['contact']['id']);
 					console.log(contacts_json);
 				}	
 			})
