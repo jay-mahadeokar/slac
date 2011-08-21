@@ -153,7 +153,7 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    var dum = Y.one('#dummy');
    var counter_i = 0;
    for(var contact in contacts_json){
-   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+Contact 1+'<br/><span class="status"><em>Status Here</em></span></div>');
+   var item = Y.Node.create('<div class="contact" name="Contact 1" id="contact_'+counter_i+'" open="false"><span class="availability"></span>Dummy name<br/><span class="status"><em>Status Here</em></span></div>');
    alert(contact);
    
    cb.insertBefore(item,dum);
