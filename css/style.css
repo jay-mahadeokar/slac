@@ -34,11 +34,12 @@ body{
 }
 #fraud{
 	padding-right:10px;
-	vertical-align:-120%;
+	vertical-align:-30px;
 }
 
 .contact hr {
-  border: 0.5px single #000;
+  border: 1px #000 ;
+  border-style: solid;
 }
 #logout a{
 		text-decoration:none;
