@@ -20,7 +20,8 @@
 			$_SESSION['loggedIn']=1;
 			$_SESSION['user']=$user;
 			if($debug) echo "Logged in!";
-			header('Location: /');
+			var_dump($_REQUEST);
+			//header('Location: /');
 		}
 		if(strcmp($_REQUEST['action'], "getContacts")==0){
 			if(!isset($_SESSION['loggedIn'])||$_SESSION['loggedIn']!=1){
