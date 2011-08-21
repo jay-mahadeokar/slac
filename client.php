@@ -17,20 +17,7 @@
 		}
 	</script>
 	<script>
-		var contacts_json;
 		
-			$.ajax({
-				url: 'do.php?action=getContacts',
-				success: function(data){
-					var returned_data = $.parseJSON(data);
-					contacts_json=returned_data['contacts'];
-					
-					alert(returned_data['contacts'][0]['contact']['id']);
-					alert(returned_data['contacts'][1]['contact']['id']);
-					
-					console.log(contacts_json);
-				}	
-			});
 		
 	</script>
 </head>
@@ -41,6 +28,7 @@
 </div>
 
 <script type="text/javascript">
+
 YUI().use('tabview', 'escape', 'plugin', function(Y) {
 	var el = document.getElementById('fade');
 	el.addEventListener("click", closelightBox, false);
@@ -156,17 +144,32 @@ YUI().use('tabview', 'escape', 'plugin', function(Y) {
    tabview.render("#demo");
    var cb = Y.one('#slac_contactbox');
    var dum = Y.one('#dummy');
-   var counter_i = 0;
-   var contacts_len = 2;
-   for(var counter_i=0; counter_i<contacts_len;++counter_i){
-   var item = Y.Node.create('<div class="contact" name="'+contacts_json[counter_i]['contact']['id']+'" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contacts_json[counter_i]['contact']['id']+'<br/><span class="status"><em>Status Here</em></span></div>');
+   var contacts_json;
+		
+			$.ajax({
+				url: 'do.php?action=getContacts',
+				success: function(data){
+					var returned_data = $.parseJSON(data);
+					contacts_json=returned_data['contacts'];
+					
+					alert(returned_data['contacts'][0]['contact']['id']);
+					alert(returned_data['contacts'][1]['contact']['id']);
+					
+					console.log(contacts_json);
+					var counter_i = 0;
+				   var contacts_len = 2;
+				   for(var counter_i=0; counter_i<contacts_len;++counter_i){
+				   var item = Y.Node.create('<div class="contact" name="'+contacts_json[counter_i]['contact']['id']+'" id="contact_'+counter_i+'" open="false"><span class="availability"></span>'+contacts_json[counter_i]['contact']['id']+'<br/><span class="status"><em>Status Here</em></span></div>');
+				   
+				   
+				   cb.insertBefore(item,dum);
+				   //item.on('dblclick', clickContact);
+				   item.on('click', touchContact);
+				   setAvailable("contact_"+counter_i,0?"yes":"no");
+				   }
+				}	
+			});
    
-   
-   cb.insertBefore(item,dum);
-   //item.on('dblclick', clickContact);
-   item.on('click', touchContact);
-   setAvailable("contact_"+counter_i,0?"yes":"no");
-   }
    
 
    /*var tab = new Y.Tab({
