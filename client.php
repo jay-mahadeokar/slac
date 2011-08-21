@@ -26,6 +26,8 @@
 					contacts_json=returned_data['contacts'];
 					
 					alert(returned_data['contacts'][0]['contact']['id']);
+					alert(returned_data['contacts'][1]['contact']['id']);
+					
 					console.log(returned_data);
 				}	
 			})
